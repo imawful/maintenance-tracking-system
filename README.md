@@ -1,8 +1,8 @@
 ## 0. Introduction
 
-The Coding Canal React Coding Challenge 
+The Coding Canal React Coding Challenge
 
-## 1. Setup Instructions 
+## 1. Setup Instructions
 
 ## 2. Features Implementation
 

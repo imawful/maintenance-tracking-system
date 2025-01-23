@@ -10,23 +10,23 @@
  *  - Department -> drop down menu from enum.
  *  - model REQUIRED.
  *  - serialNumber REQUIRED (alpha-numeric)
- *  - installDate REQUIRED (must be a past date) 
+ *  - installDate REQUIRED (must be a past date)
  *  - status -> drop down from enum.
  */
-interface Equipment{
-	id: string;
+interface Equipment {
+  id: string;
 
-    /**
-     * @minLength 3
-     */
-	name: string;
+  /**
+   * @minLength 3
+   */
+  name: string;
 
-	location: string;
-	department: 'Machining' | 'Assembly' | 'Packaging' | 'Shipping';
-	model: string;
-	serialNumber: string; //alphanumeric
-	installDate: Date;
-	status: 'Operational' | 'Down' | 'Maintenance' | 'Retired';
+  location: string;
+  department: "Machining" | "Assembly" | "Packaging" | "Shipping";
+  model: string;
+  serialNumber: string; //alphanumeric
+  installDate: Date;
+  status: "Operational" | "Down" | "Maintenance" | "Retired";
 }
 
 /**
@@ -43,31 +43,31 @@ interface Equipment{
  *  - Priority (dropdown from enum)
  *  - Completion Status (dropdown from enum)
  */
-interface MaintenanceRecord{
-	id: string;
-	equipmentId: string;
-	date: Date;
-	type: 'Preventive' | 'Repair' | 'Emergency';
+interface MaintenanceRecord {
+  id: string;
+  equipmentId: string;
+  date: Date;
+  type: "Preventive" | "Repair" | "Emergency";
 
-    /**
-     * @minLength 2
-     */
-	technician: string;
+  /**
+   * @minLength 2
+   */
+  technician: string;
 
-    /**
-     * @minimum 0
-     * @maximum 24
-     */
-	hoursSpent: number;
+  /**
+   * @minimum 0
+   * @maximum 24
+   */
+  hoursSpent: number;
 
-    /**
-     * @minLength 10
-     */
-	description: string;
+  /**
+   * @minLength 10
+   */
+  description: string;
 
-	partsReplaced?: string[];
+  partsReplaced?: string[];
 
-	priority: 'Low' | 'Medium' | 'High';
+  priority: "Low" | "Medium" | "High";
 
-	completionStatus: 'Complete' | 'Incomplete' | 'Pending Parts';
+  completionStatus: "Complete" | "Incomplete" | "Pending Parts";
 }
