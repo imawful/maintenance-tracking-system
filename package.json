@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "tsc": "tsc",
+    "tsc": "tsc --strict",
     "dev": "next dev --turbopack",
     "build": "tsc && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint && npx prettier --write ."
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
