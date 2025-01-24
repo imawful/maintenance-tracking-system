@@ -31,21 +31,21 @@ const equipmentSchema = z.object({
 const maintenanceRecordSchema = z.object({
   id: z.string(),
   equipmentId: z.string(),
-  date: z.coerce.date().max(new Date()),
+  date: z.coerce.date().max(new Date(), { message: "Cannot be future date." }),
   type: z.enum(["Preventive", "Repair", "Emergency"], {
     message: "Please choose a maintenance type.",
   }),
   technician: z.string().min(2, { message: "Technician name is too short." }),
   hoursSpent: z.coerce
     .number()
-    .min(0, { message: "Hours cannot be less than 0" })
-    .max(24, { message: "Hours cannot be greater than 24" }),
+    .min(1, { message: "Must be between 1-24" })
+    .max(24, { message: "Must be between 1-24" }),
   description: z
     .string()
     .min(10, { message: "Enter a more descriptive description." }),
   partsReplaced: z
     .string()
-    .min(1, { message: "Part name is empty, add name or remove part" })
+    .min(1, { message: "Add name or remove part" })
     .array()
     .optional(),
   priority: z.enum(["Low", "Medium", "High"], {
