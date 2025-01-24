@@ -4,7 +4,6 @@
 import { z } from "zod";
 
 const alphaNumeric: RegExp = /^[a-z0-9]+$/i;
-const requiredMsg = "This field is required.";
 
 //min(1) used to invalidate empty aka for REQUIRED.
 const equipmentSchema = z.object({
@@ -12,17 +11,17 @@ const equipmentSchema = z.object({
   name: z
     .string()
     .min(3, { message: "Name must be greater than 3 characters." }),
-  location: z.string().min(1, { message: requiredMsg }),
+  location: z.string().min(1, { message: "Please enter a location." }),
   department: z.enum(["Machining", "Assembly", "Packaging", "Shipping"], {
     message: "Please select a department",
   }),
-  model: z.string().min(1, { message: requiredMsg }),
-  serialNumber: z
-    .string()
-    .regex(alphaNumeric, { message: "Serial number must be alphanumeric" }),
+  model: z.string().min(1, { message: "Please enter a model." }),
+  serialNumber: z.string().regex(alphaNumeric, {
+    message: "Serial number must be a combination of letters and numbers.",
+  }),
   installDate: z.coerce
     .date()
-    .max(new Date(), { message: "Must be a past date." }),
+    .max(new Date(), { message: "Cannot be a future date." }),
   status: z.enum(["Operational", "Down", "Maintenance", "Retired"], {
     message: "Please select a status.",
   }),
