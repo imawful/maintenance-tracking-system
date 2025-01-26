@@ -6,17 +6,25 @@ const DirectoryList = () => {
         <li>
           <a
             className="text-md text-blue-800 hover:text-blue-300 underline"
-            href="./equipment/new-form/"
+            href="./"
           >
-            New Equipment
+            Dashboard
           </a>
         </li>
         <li>
           <a
             className="text-md text-blue-800 hover:text-blue-300 underline"
-            href="./maintenance/new-record/"
+            href="./equipment/"
           >
-            New Maintenance Record
+            Equipment
+          </a>
+        </li>
+        <li>
+          <a
+            className="text-md text-blue-800 hover:text-blue-300 underline"
+            href="./maintenance/"
+          >
+            Maintenance
           </a>
         </li>
       </ul>

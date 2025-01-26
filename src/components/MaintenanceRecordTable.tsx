@@ -210,193 +210,216 @@ const MaintenanceRecordTable = () => {
   console.log("filter end date: ", filtersEndDate);
 
   return (
-    <table className="table-fixed w-full">
-      <thead className="">
-        {maintenanceRecordTable.getHeaderGroups().map((hgroup) => (
-          <tr key={hgroup.id} className="bg-indigo-950">
-            {hgroup.headers.map((header) => {
-              return (
-                <th
-                  key={header.id}
-                  colSpan={header.colSpan}
-                  className={
-                    header.column.id === "hoursSpent" ||
-                    header.column.id === "actions"
-                      ? "w-1/5 border-2 border-black"
-                      : header.column.id === "date"
-                      ? "w-3/5 border-2 border-black"
-                      : header.column.id !== "description"
-                      ? "w-1/5 border-2 border-black"
-                      : "w-3/5 border-2 border-black"
-                  }
-                >
-                  <div
-                    className={
-                      header.column.getCanSort()
-                        ? "font-bold lg:break-normal break-all text-lg p-3 text-neutral-50 hover:text-neutral-400"
-                        : "font-bold lg:break-normal break-all text-lg p-3 text-neutral-50"
-                    }
-                    style={{
-                      cursor: header.column.getCanSort() ? "pointer" : "",
-                    }}
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                    {{
-                      asc: " 🔼",
-                      desc: " 🔽",
-                    }[header.column.getIsSorted() as string] ?? null}
-                  </div>
-                  {header.column.getCanFilter() && (
-                    <div className="flex justify-center text-sm bg-inherit text-neutral-50 text-center">
-                      {header.column.id === "type" && (
-                        <select
-                          className="bg-inherit text-center hover:cursor-pointer"
-                          onChange={(e) =>
-                            header.column.setFilterValue(
-                              e.target.value || undefined,
-                            )
-                          }
-                        >
-                          <option value="">All</option>
-                          <option value="Preventive">Preventive</option>
-                          <option value="Repair">Repair</option>
-                          <option value="Emergency">Emergency</option>
-                        </select>
-                      )}
-                      {header.column.id === "priority" && (
-                        <select
-                          className="bg-inherit text-center hover:cursor-pointer"
-                          value={
-                            (header.column.getFilterValue() as string) || ""
-                          }
-                          onChange={(e) =>
-                            header.column.setFilterValue(
-                              e.target.value || undefined,
-                            )
-                          }
-                        >
-                          <option value="">All</option>
-                          <option value="Low">Low</option>
-                          <option value="Medium">Medium</option>
-                          <option value="High">High</option>
-                        </select>
-                      )}
-                      {header.column.id === "completionStatus" && (
-                        <select
-                          className="bg-inherit text-center hover:cursor-pointer"
-                          value={
-                            (header.column.getFilterValue() as string) || ""
-                          }
-                          onChange={(e) =>
-                            header.column.setFilterValue(
-                              e.target.value || undefined,
-                            )
-                          }
-                        >
-                          <option value="">All</option>
-                          <option value="Complete">Complete</option>
-                          <option value="Incomplete">Incomplete</option>
-                          <option value="Pending Parts">Pending Parts</option>
-                        </select>
-                      )}
-                      {header.column.id === "date" && (
-                        <div className="flex flex-col items-center lg:flex-row gap-6">
-                          <div className="align-center">
-                            <input
-                              id="start-date"
-                              value={
-                                filtersStartDate.toISOString().split("T")[0]
-                              }
-                              min={dateMinimum}
-                              max={filtersEndDate.toISOString().split("T")[0]}
-                              onChange={(e) => {
-                                setFiltersStartDate(new Date(e.target.value));
-                                header.column.setFilterValue(filtersEndDate);
-                              }}
-                              type="date"
-                              className="bg-inherit"
-                            />
-                          </div>
-                          <p>-</p>
-                          <div className="align-center">
-                            <input
-                              id="end-date"
-                              value={filtersEndDate.toISOString().split("T")[0]}
-                              min={filtersStartDate.toISOString().split("T")[0]}
-                              max={dateMaximum}
-                              onChange={(e) => {
-                                if (e.target.value === dateMaximum) {
-                                  setFiltersEndDate(dateMAX);
-                                } else {
-                                  setFiltersEndDate(new Date(e.target.value));
-                                }
-                                header.column.setFilterValue(filtersEndDate);
-                              }}
-                              type="date"
-                              className="bg-inherit"
-                            />
-                          </div>
-                          <button
-                            className="align-top mb-1 pl-2 pr-2 pt-1 pb-1 rounded-md bg-indigo-800"
-                            onClick={() => {
-                              setFiltersStartDate(dateMIN);
-                              setFiltersEndDate(dateMAX);
-                              maintenanceRecordTable
-                                .getColumn("date")
-                                ?.setFilterValue(filtersEndDate);
-                            }}
-                          >
-                            Reset
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </th>
-              );
-            })}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {maintenanceRecordTable.getRowModel().rows.map((row) => {
-          return (
-            <tr
-              key={row.id}
-              className={
-                /*
-                row.getVisibleCells()
-                   .some(cell => cell.column.id == 'priority' && cell.getValue() === 'High')
-                   ? "bg-amber-600" 
-                   : row.getVisibleCells()
-                        .some(cell => cell.column.id == 'priority' && cell.getValue() === 'Low')
-                        ? "bg-slate-400"
-                        : row.getVisibleCells()
-                             .some(cell => cell.column.id === 'priority' && cell.getValue() === 'Medium')
-                             ? "bg-teal-400" : "" 
-                */
-                "bg-zinc-400"
-              }
-            >
-              {row.getVisibleCells().map((cell) => {
+    <div className="flex flex-col justify-center">
+      <button
+        onClick={() => {
+          maintenanceRecordTable.resetSorting();
+          setFiltersStartDate(dateMIN);
+          setFiltersEndDate(dateMAX);
+          maintenanceRecordTable
+            .getColumn("date")
+            ?.setFilterValue(filtersEndDate);
+        }}
+        className="bg-indigo-400 w-fit self-center text-md p-2 m-4 rounded-md text-neutral-50"
+      >
+        Clear
+      </button>
+      <table className="table-fixed w-full">
+        <thead className="">
+          {maintenanceRecordTable.getHeaderGroups().map((hgroup) => (
+            <tr key={hgroup.id} className="bg-indigo-950">
+              {hgroup.headers.map((header) => {
                 return (
-                  <td
-                    key={cell.id}
-                    className="text-center text-neutral-900 border-2 border-neutral-900 text-md"
+                  <th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    className={
+                      header.column.id === "hoursSpent" ||
+                      header.column.id === "actions"
+                        ? "w-1/5 border-2 border-black"
+                        : header.column.id === "date"
+                        ? "w-3/5 border-2 border-black"
+                        : header.column.id !== "description"
+                        ? "w-1/5 border-2 border-black"
+                        : "w-3/5 border-2 border-black"
+                    }
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
+                    <div
+                      className={
+                        header.column.getCanSort()
+                          ? "font-bold break-all lg:break-normal text-lg p-3 text-neutral-50 hover:text-neutral-400"
+                          : "font-bold break-all lg:break-normal text-lg p-3 text-neutral-50"
+                      }
+                      style={{
+                        cursor: header.column.getCanSort() ? "pointer" : "",
+                      }}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                      {{
+                        asc: " 🔼",
+                        desc: " 🔽",
+                      }[header.column.getIsSorted() as string] ?? null}
+                    </div>
+                    {header.column.getCanFilter() && (
+                      <div className="flex justify-center text-sm bg-inherit text-neutral-50 text-center">
+                        {header.column.id === "type" && (
+                          <select
+                            className="bg-inherit text-center hover:cursor-pointer"
+                            onChange={(e) =>
+                              header.column.setFilterValue(
+                                e.target.value || undefined,
+                              )
+                            }
+                          >
+                            <option value="">All</option>
+                            <option value="Preventive">Preventive</option>
+                            <option value="Repair">Repair</option>
+                            <option value="Emergency">Emergency</option>
+                          </select>
+                        )}
+                        {header.column.id === "priority" && (
+                          <select
+                            className="bg-inherit text-center hover:cursor-pointer"
+                            value={
+                              (header.column.getFilterValue() as string) || ""
+                            }
+                            onChange={(e) =>
+                              header.column.setFilterValue(
+                                e.target.value || undefined,
+                              )
+                            }
+                          >
+                            <option value="">All</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                          </select>
+                        )}
+                        {header.column.id === "completionStatus" && (
+                          <select
+                            className="bg-inherit text-center hover:cursor-pointer"
+                            value={
+                              (header.column.getFilterValue() as string) || ""
+                            }
+                            onChange={(e) =>
+                              header.column.setFilterValue(
+                                e.target.value || undefined,
+                              )
+                            }
+                          >
+                            <option value="">All</option>
+                            <option value="Complete">Complete</option>
+                            <option value="Incomplete">Incomplete</option>
+                            <option value="Pending Parts">Pending Parts</option>
+                          </select>
+                        )}
+                        {header.column.id === "date" && (
+                          <div className="flex flex-col gap-2 items-center lg:flex-row">
+                            <div className="align-center">
+                              <input
+                                id="start-date"
+                                value={
+                                  filtersStartDate.toISOString().split("T")[0]
+                                }
+                                min={dateMinimum}
+                                max={filtersEndDate.toISOString().split("T")[0]}
+                                onChange={(e) => {
+                                  setFiltersStartDate(new Date(e.target.value));
+                                  header.column.setFilterValue(filtersEndDate);
+                                }}
+                                type="date"
+                                className="bg-inherit"
+                              />
+                            </div>
+                            <p>-</p>
+                            <div className="align-center">
+                              <input
+                                id="end-date"
+                                value={
+                                  filtersEndDate.toISOString().split("T")[0]
+                                }
+                                min={
+                                  filtersStartDate.toISOString().split("T")[0]
+                                }
+                                max={dateMaximum}
+                                onChange={(e) => {
+                                  if (e.target.value === dateMaximum) {
+                                    setFiltersEndDate(dateMAX);
+                                  } else {
+                                    setFiltersEndDate(new Date(e.target.value));
+                                  }
+                                  header.column.setFilterValue(filtersEndDate);
+                                }}
+                                type="date"
+                                className="bg-inherit"
+                              />
+                            </div>
+                            <button
+                              className="align-top mb-1 pl-2 pr-2 pt-1 pb-1 rounded-md bg-indigo-800"
+                              onClick={() => {
+                                setFiltersStartDate(dateMIN);
+                                setFiltersEndDate(dateMAX);
+                                maintenanceRecordTable
+                                  .getColumn("date")
+                                  ?.setFilterValue(filtersEndDate);
+                              }}
+                            >
+                              Reset
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </th>
                 );
               })}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody>
+          {maintenanceRecordTable.getRowModel().rows.map((row) => {
+            return (
+              <tr
+                key={row.id}
+                className={
+                  /*
+                   * color row based on priority
+                  row.getVisibleCells()
+                     .some(cell => cell.column.id == 'priority' && cell.getValue() === 'High')
+                     ? "bg-amber-600" 
+                     : row.getVisibleCells()
+                          .some(cell => cell.column.id == 'priority' && cell.getValue() === 'Low')
+                          ? "bg-slate-400"
+                          : row.getVisibleCells()
+                               .some(cell => cell.column.id === 'priority' && cell.getValue() === 'Medium')
+                               ? "bg-teal-400" : "" 
+                  */
+                  "bg-zinc-400"
+                }
+              >
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <td
+                      key={cell.id}
+                      className="text-center break-all lg:break-normal text-neutral-900 border-2 border-neutral-900 text-md"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

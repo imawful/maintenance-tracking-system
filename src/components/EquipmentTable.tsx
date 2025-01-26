@@ -91,6 +91,11 @@ const EquipmentTable = () => {
       enableSorting: false,
       filterFn: "equals",
     }),
+    columnHelper.display({
+      id: "actions",
+      header: "Select",
+      cell: (props) => props.row.id,
+    }),
   ];
 
   //filters state
@@ -139,16 +144,24 @@ const EquipmentTable = () => {
       <table className="table-fixed w-full">
         <thead className="">
           {equipmentTable.getHeaderGroups().map((hgroup) => (
-            <tr key={hgroup.id} className="border-2 bg-black">
+            <tr key={hgroup.id} className="bg-indigo-950">
               {hgroup.headers.map((header) => {
                 return (
                   <th
                     key={header.id}
                     colSpan={header.colSpan}
-                    className="border"
+                    className={
+                      header.column.id === "actions"
+                        ? "w-1/3 border-2 border-black"
+                        : "w-2/3 border-2 border-black"
+                    }
                   >
                     <div
-                      className="text-lg text-neutral-50 text-center break-all p-2"
+                      className={
+                        header.column.getCanSort()
+                          ? "text-lg text-neutral-50 text-center break-all p-2 hover:text-neutral-400"
+                          : "text-lg text-neutral-50 text-center break-all p-2"
+                      }
                       style={{
                         cursor: header.column.getCanSort() ? "pointer" : "",
                       }}
@@ -167,7 +180,7 @@ const EquipmentTable = () => {
                       <div className="flex justify-center text-sm bg-inherit text-neutral-50 text-center">
                         {header.column.id === "status" && (
                           <select
-                            className="bg-inherit text-center"
+                            className="bg-inherit text-center hover:cursor-pointer"
                             onChange={(e) =>
                               header.column.setFilterValue(
                                 e.target.value || undefined,
@@ -183,7 +196,7 @@ const EquipmentTable = () => {
                         )}
                         {header.column.id === "department" && (
                           <select
-                            className="bg-inherit text-center"
+                            className="bg-inherit text-center hover:cursor-pointer"
                             value={
                               (header.column.getFilterValue() as string) || ""
                             }
@@ -245,7 +258,7 @@ const EquipmentTable = () => {
                   return (
                     <td
                       key={cell.id}
-                      className="text-center break-all text-md text-zinc-800 border-2 p-1 border-neutral-900"
+                      className="text-center break-all text-md text-neutral-900 border-2 p-1 border-neutral-900"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
