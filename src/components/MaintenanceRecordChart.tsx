@@ -20,13 +20,13 @@ const MaintenanceRecordChart = () => {
 
   return (
     <div className="w-full h-full bg-inherit">
-      <div className="w-[600px] h-[600px]">
+      <div className="w-[600px] h-[600px] p-4">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={mockData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="department" />
-            <YAxis />
-            <Bar dataKey="hoursSpent" fill="#8884d8" />
+            <CartesianGrid stroke="black" strokeDasharray="3 3" />
+            <XAxis dataKey="department" tick={{fill: 'black', fontSize: 20}}/>
+            <YAxis tick={{fill: 'black', fontSize: 20}}/>
+            <Bar dataKey="hoursSpent" fill="#1e1b4b" />
           </BarChart>
         </ResponsiveContainer>
       </div>

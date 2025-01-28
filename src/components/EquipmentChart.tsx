@@ -32,6 +32,26 @@ const EquipmentChart = () => {
     { status: "Retired", count: 2, fill: "#9e9e9e" },
   ];
   //fill="#8884d8" - defualt blue from piechart ex
+  
+  const renderCustomBarLabel = ({ payload, x, y, width, height, value }) => {
+    const totalCount = mockData.map(d => d.count).reduce((a,b) => a+b);
+    const percent = Math.round((payload.count/totalCount) * 100);
+    const status = payload.status;
+    const dy = status === 'Operational'
+               ? -30 : status === 'Down'
+               ? 5 : status === 'Maintenance'
+               ? 20 : 4;
+    const dx = status === 'Operational'
+               ? 0 : status === 'Down'
+               ? -30 : status === 'Maintenance'
+               ? 0 : 40;
+    return (
+      <text x={x} y={y} fill="black" textAnchor="middle" dx={dx} dy={dy}>
+        <tspan x={x} y={y} dx={dx} dy={dy}>{status}</tspan>
+        <tspan x={x} y={y} dx={dx} dy={dy+20}>{value} ({percent}%)</tspan>
+      </text>
+    );
+	};
 
   return (
     <div className="w-full h-full bg-inherit">
@@ -44,8 +64,8 @@ const EquipmentChart = () => {
               nameKey="status"
               cx="50%"
               cy="50%"
-              outerRadius={60}
-              label
+              outerRadius={170}
+              label={renderCustomBarLabel}
             />
           </PieChart>
         </ResponsiveContainer>

@@ -53,9 +53,9 @@ const MaintenanceRecordForm = () => {
   };
 
   return (
-    <div className="flex flex-col bg-inherit items-center">
+    <div className="flex flex-col bg-inherit items-center h-fit w-fit">
       <form
-        className="border-2 border-black w-auto m-4 p-4 bg-neutral-300"
+        className="border border-black w-auto m-4 p-4 bg-neutral-300"
         onSubmit={handleSubmit(myOnSubmit)}
       >
         <div className="mb-4 flex flex-row justify-between gap-8">

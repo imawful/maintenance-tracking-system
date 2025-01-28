@@ -1,34 +1,27 @@
-const DirectoryList = () => {
+const DirectoryList = ({linksToOmit} : { linksToOmit?: string[] }) => {
+  const allLinks = [
+    {href: '/', label: 'Dashboard'},
+    {href: '/equipment/', label: 'Equipment'},
+    {href: '/equipment/new-form/', label: 'New Equipment'},
+    {href: '/maintenance/', label: 'Maintenance'},
+    {href: '/maintenance/new-record/', label: 'New Maintenance Record'},
+  ];
+
+  const filteredLinks = allLinks.filter(link => !(linksToOmit?.includes(link.href)))
+
   return (
-    <div className="w-auto h-full bg-inherit p-2 border-r-2 border-white">
-      <h1 className="text-3xl text-center text-neutral-50">Directory</h1>
-      <ul className="text-center">
-        <li>
-          <a
-            className="text-md text-blue-800 hover:text-blue-300 underline"
-            href="./"
-          >
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a
-            className="text-md text-blue-800 hover:text-blue-300 underline"
-            href="./equipment/"
-          >
-            Equipment
-          </a>
-        </li>
-        <li>
-          <a
-            className="text-md text-blue-800 hover:text-blue-300 underline"
-            href="./maintenance/"
-          >
-            Maintenance
-          </a>
-        </li>
+      <ul className="w-full flex flex-row justify-between items-center text-center">
+        {filteredLinks.map((link, index) => (
+          <li key={index}>
+            <a
+              className="text-md text-blue-800 hover:text-blue-300 underline"
+              href={link.href}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
       </ul>
-    </div>
   );
 };
 

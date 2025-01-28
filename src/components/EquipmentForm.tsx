@@ -23,7 +23,7 @@ const EquipmentForm = () => {
   return (
     <div className="flex flex-col bg-inherit items-center">
       <form
-        className="border-2 border-black w-auto p-4 m-4 bg-neutral-300"
+        className="border border-black w-auto p-4 m-4 bg-neutral-300"
         onSubmit={handleSubmit(myOnSubmit)}
       >
         <div className="flex flex-row justify-between gap-8 mb-4">

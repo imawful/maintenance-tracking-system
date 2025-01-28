@@ -137,9 +137,9 @@ const EquipmentTable = () => {
           equipmentTable.resetColumnFilters();
           equipmentTable.resetSorting();
         }}
-        className="bg-indigo-400 w-fit self-center text-md p-2 m-4 rounded-md text-neutral-50"
+        className="bg-indigo-600 hover:bg-indigo-500 w-fit self-center text-center text-md p-2 m-4 rounded-md text-neutral-50"
       >
-        Clear
+        Clear Filters
       </button>
       <table className="table-fixed w-full">
         <thead className="">
