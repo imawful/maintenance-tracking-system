@@ -71,7 +71,7 @@ const EquipmentChart = () => {
         : status === "Down"
         ? -40
         : status === "Maintenance"
-        ? -30 
+        ? -30
         : 40;
     return (
       <text x={x} y={y} fill="black" textAnchor="middle" dx={dx} dy={dy}>
