@@ -9,31 +9,10 @@ import {
   getFilteredRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useMockData } from "@/context/MockDataContext";
+import { useState, useEffect } from "react";
 const EquipmentTable = () => {
-  const sampleData: Equipment[] = [
-    {
-      id: "1",
-      name: "default name 1",
-      location: "west missisipi",
-      model: "model x",
-      department: "Machining",
-      serialNumber: "fakesiri1xyz",
-      installDate: new Date("01-01-2015"),
-      status: "Down",
-    },
-    {
-      id: "2",
-      name: "a default name 2",
-      location: "east missisipi",
-      model: "model y",
-      department: "Assembly",
-      serialNumber:
-        "fakesiri2somethingsupersoridculouslylongthatievenhaveextranumbers1234314314314312xyz",
-      installDate: new Date(),
-      status: "Retired",
-    },
-  ];
+  const { equipment } = useMockData();
 
   //we need custom type for the equipment entries in our table
   //since original type held a Date.
@@ -106,15 +85,17 @@ const EquipmentTable = () => {
 
   /* sampleData is valid array of type Equipment
    *  1:1 with schema. we map it to type EquipmentTableEntry here.
+   *  we use use effect to ensure we are operating with valid date,
+   *  and to be cautious when creating a new date.
    */
-  const [data, setData] = useState<EquipmentTableEntry[]>(
-    sampleData.map((equipment) => {
-      return {
-        ...equipment,
-        installDate: equipment.installDate.toDateString(),
-      };
-    }),
-  );
+  const [data, setData] = useState<EquipmentTableEntry[]>([]);
+  useEffect(() => {
+    const processedSampleData = equipment.map((eq) => ({
+      ...eq,
+      installDate: new Date(eq.installDate).toDateString(),
+    }));
+    setData(processedSampleData);
+  }, [equipment]);
 
   const equipmentTable = useReactTable({
     data: data,
