@@ -1,4 +1,3 @@
-import { Equipment } from "@/ts/types";
 import { MaintenanceRecord } from "@/ts/types";
 import {
   createColumnHelper,
@@ -6,58 +5,13 @@ import {
   getCoreRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useMockData } from "@/context/MockDataContext";
 
 const RecentMaintenanceActivity = () => {
-  const sampleEquipmentData: Equipment[] = [
-    {
-      id: "1",
-      name: "default name 1",
-      location: "west missisipi",
-      model: "model x",
-      department: "Machining",
-      serialNumber: "fakesiri1xyz",
-      installDate: new Date("01-01-2015"),
-      status: "Down",
-    },
-    {
-      id: "2",
-      name: "a default name 2",
-      location: "east missisipi",
-      model: "model y",
-      department: "Assembly",
-      serialNumber:
-        "fakesiri2somethingsupersoridculouslylongthatievenhaveextranumbers1234314314314312xyz",
-      installDate: new Date("01-20-2025"),
-      status: "Retired",
-    },
-  ];
-  const sampleMaintenanceData: MaintenanceRecord[] = [
-    {
-      id: "1",
-      equipmentId: "2",
-      date: new Date("01-23-2025"),
-      type: "Repair",
-      technician: "Javier Gonzales",
-      hoursSpent: 20,
-      description:
-        "a very long description about some kind of maintenance that happened",
-      priority: "Medium",
-      completionStatus: "Pending Parts",
-    },
-    {
-      id: "2",
-      equipmentId: "1",
-      date: new Date("01-25-2025"),
-      type: "Emergency",
-      technician: "Hugo Villa",
-      hoursSpent: 10,
-      partsReplaced: ["engine"],
-      description: "it's an emergency they are missing a flux capacitor!",
-      priority: "High",
-      completionStatus: "Incomplete",
-    },
-  ];
+  const { equipment, maintenanceRecords } = useMockData();
+  const sampleEquipmentData = equipment;
+  const sampleMaintenanceData = maintenanceRecords;
 
   type MaintenanceRecordTableEntry = Omit<MaintenanceRecord, "date"> & {
     date: string;
@@ -120,17 +74,22 @@ const RecentMaintenanceActivity = () => {
 
   /* sampleData is valid array of type MaintenanceRecord
    *  1:1 with schema. we map it to type MaintenanceTableEntry here.
+   *  useEffect was needed here since we are doing "new Date()" to sort
+   *  the maintenance activity. the maintenance records was added
+   *  to dependency array so that we get our data when we receive the
+   *  data from the provider.
    */
-  const [data, setData] = useState<MaintenanceRecordTableEntry[]>(
-    //TODO grab the first 10 rows, where the newest dates are first!
-    sampleMaintenanceData.map((record) => {
-      return {
+  const [data, setData] = useState<MaintenanceRecordTableEntry[]>([]);
+  useEffect(() => {
+    const filteredData = sampleMaintenanceData
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 10)
+      .map((record) => ({
         ...record,
-        date: record.date.toDateString(),
-      };
-    }),
-  );
-
+        date: new Date(record.date).toDateString(),
+      }));
+    setData(filteredData);
+  }, [sampleMaintenanceData]);
   const recentActivityTable = useReactTable({
     data: data,
     columns: columns,
@@ -148,9 +107,9 @@ const RecentMaintenanceActivity = () => {
                   key={header.id}
                   colSpan={header.colSpan}
                   className={
-                    header.id === 'description' 
-                    ? "w-3/4 border-2 border-black"
-                    : "w-1/4 border-2 border-black"
+                    header.id === "description"
+                      ? "w-3/4 border-2 border-black"
+                      : "w-1/4 border-2 border-black"
                   }
                 >
                   <div className="font-bold break-all lg:break-normal text-lg p-3 text-neutral-50">
@@ -171,15 +130,31 @@ const RecentMaintenanceActivity = () => {
             <tr
               key={row.id}
               className={
-                  row.getVisibleCells()
-                     .some(cell => cell.column.id == 'priority' && cell.getValue() === 'High')
-                     ? "bg-amber-600" 
-                     : row.getVisibleCells()
-                          .some(cell => cell.column.id == 'priority' && cell.getValue() === 'Low')
-                          ? "bg-slate-400"
-                          : row.getVisibleCells()
-                               .some(cell => cell.column.id === 'priority' && cell.getValue() === 'Medium')
-                               ? "bg-teal-400" : "" 
+                row
+                  .getVisibleCells()
+                  .some(
+                    (cell) =>
+                      cell.column.id == "priority" &&
+                      cell.getValue() === "High",
+                  )
+                  ? "bg-amber-600"
+                  : row
+                      .getVisibleCells()
+                      .some(
+                        (cell) =>
+                          cell.column.id == "priority" &&
+                          cell.getValue() === "Low",
+                      )
+                  ? "bg-slate-400"
+                  : row
+                      .getVisibleCells()
+                      .some(
+                        (cell) =>
+                          cell.column.id === "priority" &&
+                          cell.getValue() === "Medium",
+                      )
+                  ? "bg-teal-400"
+                  : ""
                 //"bg-zinc-400"
               }
             >
