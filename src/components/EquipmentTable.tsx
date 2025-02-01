@@ -60,7 +60,7 @@ const EquipmentTable = () => {
     }),
     columnHelper.accessor("installDate", {
       header: "Install Date",
-      cell: (info) => info.getValue(),
+      cell: (info) => info.getValue().split("T")[0],
       enableColumnFilter: false,
       sortingFn: "datetime",
     }),
@@ -85,14 +85,12 @@ const EquipmentTable = () => {
 
   /* sampleData is valid array of type Equipment
    *  1:1 with schema. we map it to type EquipmentTableEntry here.
-   *  we use use effect to ensure we are operating with valid date,
-   *  and to be cautious when creating a new date.
    */
   const [data, setData] = useState<EquipmentTableEntry[]>([]);
   useEffect(() => {
     const processedSampleData = equipment.map((eq) => ({
       ...eq,
-      installDate: new Date(eq.installDate).toDateString(),
+      installDate: new Date(eq.installDate).toISOString(),
     }));
     setData(processedSampleData);
   }, [equipment]);
