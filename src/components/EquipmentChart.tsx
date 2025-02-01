@@ -1,57 +1,89 @@
-import { Equipment } from "@/ts/types";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, ResponsiveContainer } from "recharts";
+import { useMockData } from "@/context/MockDataContext";
 const EquipmentChart = () => {
-  const sampleData: Equipment[] = [
+  const { equipment, maintenanceRecords } = useMockData();
+  interface equipmentChartData {
+    status: string;
+    count: number;
+    fill: string;
+  }
+  const equipmentStatus = equipment.map((eq) => eq.status);
+  const operationalEquipment = equipmentStatus.filter(
+    (status) => status === "Operational",
+  );
+  const downEquipment = equipmentStatus.filter((status) => status === "Down");
+  const maintenanceEquipment = equipmentStatus.filter(
+    (status) => status === "Maintenance",
+  );
+  const retiredEquipment = equipmentStatus.filter(
+    (status) => status === "Retired",
+  );
+
+  const mockData: equipmentChartData[] = [
     {
-      id: "1",
-      name: "default name 1",
-      location: "west missisipi",
-      model: "model x",
-      department: "Machining",
-      serialNumber: "fakesiri1xyz",
-      installDate: new Date("01-01-2015"),
-      status: "Down",
+      status: "Operational",
+      count: operationalEquipment.length,
+      fill: "#4caf50",
     },
+    { status: "Down", count: downEquipment.length, fill: "#f44336" },
     {
-      id: "2",
-      name: "a default name 2",
-      location: "east missisipi",
-      model: "model y",
-      department: "Assembly",
-      serialNumber:
-        "fakesiri2somethingsupersoridculouslylongthatievenhaveextranumbers1234314314314312xyz",
-      installDate: new Date(),
-      status: "Retired",
+      status: "Maintenance",
+      count: maintenanceEquipment.length,
+      fill: "#ff9800",
     },
+    { status: "Retired", count: retiredEquipment.length, fill: "#9e9e9e" },
   ];
 
-  const mockData = [
-    { status: "Operational", count: 7, fill: "#4caf50" },
-    { status: "Down", count: 3, fill: "#f44336" },
-    { status: "Maintenance", count: 5, fill: "#ff9800" },
-    { status: "Retired", count: 2, fill: "#9e9e9e" },
-  ];
-  //fill="#8884d8" - defualt blue from piechart ex
-  
-  const renderCustomBarLabel = ({ payload, x, y, width, height, value }) => {
-    const totalCount = mockData.map(d => d.count).reduce((a,b) => a+b);
-    const percent = Math.round((payload.count/totalCount) * 100);
+  interface BarLabelPayload {
+    count: number;
+    status: string;
+  }
+  interface EquipmentLabelProps {
+    payload: BarLabelPayload;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    value: number;
+  }
+  const renderCustomBarLabel = ({
+    payload,
+    x,
+    y,
+    width,
+    height,
+    value,
+  }: EquipmentLabelProps) => {
+    const totalCount = mockData.map((d) => d.count).reduce((a, b) => a + b);
+    const percent = Math.round((payload.count / totalCount) * 100);
     const status = payload.status;
-    const dy = status === 'Operational'
-               ? -30 : status === 'Down'
-               ? 5 : status === 'Maintenance'
-               ? 20 : 4;
-    const dx = status === 'Operational'
-               ? 0 : status === 'Down'
-               ? -30 : status === 'Maintenance'
-               ? 0 : 40;
+    const dy =
+      status === "Operational"
+        ? -30
+        : status === "Down"
+        ? -15
+        : status === "Maintenance"
+        ? 20
+        : -14;
+    const dx =
+      status === "Operational"
+        ? 10
+        : status === "Down"
+        ? -40
+        : status === "Maintenance"
+        ? -30 
+        : 40;
     return (
       <text x={x} y={y} fill="black" textAnchor="middle" dx={dx} dy={dy}>
-        <tspan x={x} y={y} dx={dx} dy={dy}>{status}</tspan>
-        <tspan x={x} y={y} dx={dx} dy={dy+20}>{value} ({percent}%)</tspan>
+        <tspan x={x} y={y} dx={dx} dy={dy}>
+          {status}
+        </tspan>
+        <tspan x={x} y={y} dx={dx} dy={dy + 20}>
+          {value} ({percent}%)
+        </tspan>
       </text>
     );
-	};
+  };
 
   return (
     <div className="w-full h-full bg-inherit">
