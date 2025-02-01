@@ -14,7 +14,7 @@ const Dashboard = () => {
             Overview of maintenance metrics and latest activity.
           </p>
           <div className="w-2/4 self-center">
-            <DirectoryList />
+            <DirectoryList linksToOmit={["/"]} />
           </div>
           <hr className="w-1/2 border-neutral-300" />
         </div>
