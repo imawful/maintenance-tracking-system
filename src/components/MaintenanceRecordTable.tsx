@@ -24,13 +24,13 @@ const MaintenanceRecordTable = () => {
   const columns = [
     /*
      * prolly dont wanna show id
+     */
     columnHelper.accessor("id", {
       header: "ID",
       cell: (info) => info.getValue(),
       enableColumnFilter: false,
-      sortingFn: "basic",
+      sortingFn: "alphanumeric",
     }),
-   */
     columnHelper.accessor("equipmentId", {
       header: "Equipment Name",
       cell: (info) => equipment.find((eq) => eq.id === info.getValue())?.name,
@@ -103,7 +103,9 @@ const MaintenanceRecordTable = () => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   //sorting state
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: "id", desc: true },
+  ]);
 
   /* sampleData is valid array of type MaintenanceRecord
    *  1:1 with schema. we map it to type MaintenanceTableEntry here.
