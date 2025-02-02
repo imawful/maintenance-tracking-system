@@ -9,7 +9,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: black;
+    /* slate-300: #cbd5e1; */
+    --background: #f1f5f9; /*tailwind's slate-100*/
     --foreground: grey;
   }
 }
