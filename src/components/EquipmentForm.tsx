@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Equipment } from "../ts/types";
 import { equipmentSchema } from "../ts/schemas";
 import { useForm } from "react-hook-form";
+import { useMockData } from "@/context/MockDataContext";
 
 const EquipmentForm = () => {
   const {
@@ -13,9 +14,21 @@ const EquipmentForm = () => {
     defaultValues: { id: "" },
   });
 
+  const { equipment, setEquipment } = useMockData();
+
   const myOnSubmit = (data: Equipment) => {
-    //TODO update the data's id accordingly.
-    console.log("submitted an equiment", data);
+    console.log("pressed submit an equiment with new equipment: ", data);
+    //create update data.
+    const id = equipment.length;
+    const updatedEquipment = [...equipment, { ...data, id: id.toString() }];
+
+    //set the updated data using the contex provider.
+    setEquipment(updatedEquipment);
+    sessionStorage.setItem("equipment", JSON.stringify(updatedEquipment));
+
+    //redirect to main equipment page upon sucessful submission.
+    console.log("sucessfully submitted an equiment!", updatedEquipment);
+    window.location.href = "./";
   };
 
   //bg-neutral-800
