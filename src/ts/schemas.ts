@@ -29,7 +29,7 @@ const equipmentSchema = z.object({
 
 const maintenanceRecordSchema = z.object({
   id: z.string(),
-  equipmentId: z.string(),
+  equipmentId: z.string().min(1, { message: "Please select an equipment." }),
   date: z.coerce.date().max(new Date(), { message: "Cannot be future date." }),
   type: z.enum(["Preventive", "Repair", "Emergency"], {
     message: "Please choose a maintenance type.",
