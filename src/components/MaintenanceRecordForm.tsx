@@ -3,6 +3,7 @@ import { MaintenanceRecord } from "../ts/types";
 import { maintenanceRecordSchema } from "../ts/schemas";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useMockData } from "@/context/MockDataContext";
 
 const MaintenanceRecordForm = () => {
   const {
@@ -19,6 +20,9 @@ const MaintenanceRecordForm = () => {
       equipmentId: "",
     },
   });
+
+  const { equipment, maintenanceRecords, setMaintenanceRecords } =
+    useMockData();
 
   const [dynamicPartsReplaced, setDynamicPartsReplaced] = useState(
     [] as string[] | undefined,
@@ -48,8 +52,24 @@ const MaintenanceRecordForm = () => {
 
   const myOnSubmit = (data: MaintenanceRecord) => {
     //validate
-    maintenanceRecordSchema.parse(data);
-    console.log("submitted a maintenance record", data);
+    console.log("pressed submit record with new record: ", data);
+    //create update data.
+    const id = maintenanceRecords.length;
+    const updatedRecords = [
+      ...maintenanceRecords,
+      { ...data, id: id.toString() },
+    ];
+
+    //set the updated data using the contex provider.
+    setMaintenanceRecords(updatedRecords);
+    sessionStorage.setItem(
+      "maintenanceRecords",
+      JSON.stringify(updatedRecords),
+    );
+
+    //redirect to main equipment page upon sucessful submission.
+    console.log("sucessfully submitted a maintenance record", updatedRecords);
+    window.location.href = "./";
   };
 
   return (
@@ -103,17 +123,30 @@ const MaintenanceRecordForm = () => {
         <div className="flex flex-row mb-4 justify-center items-center gap-8">
           <div className="flex flex-col ">
             <label
-              htmlFor="maintentance-equipment-id"
+              htmlFor="maintenance-equipment-id"
               className="text-lg text-black cursor-text"
             >
               Equipment:
             </label>
             <select
-              id="maintentance-equipment-id"
+              id="maintenance-equipment-id"
               className="cursor-pointer w-md p-1 text-md rounded-md bg-zinc-800 text-center text-neutral-50"
+              {...register("equipmentId")}
             >
-              <option value="">Select equipment</option>
+              <option value="">Select equipment</option> &&
+              {equipment.map((item, index) => {
+                return (
+                  <option key={index} value={item.id}>
+                    {item.name}
+                  </option>
+                );
+              })}
             </select>
+            {typeof errors.equipmentId?.message === "string" && (
+              <p className="text-sm text-red-500 font-bold">
+                {errors.equipmentId?.message}
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col">
