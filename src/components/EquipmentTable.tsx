@@ -23,13 +23,13 @@ const EquipmentTable = () => {
   const columns = [
     /*
      * prolly dont wanna show id
+     */
     columnHelper.accessor("id", {
       header: "ID",
       cell: (info) => info.getValue(),
       enableColumnFilter: false,
-      sortingFn: "basic",
+      sortingFn: "alphanumeric",
     }),
-   */
     columnHelper.accessor("name", {
       header: "Name",
       cell: (info) => info.getValue(),
@@ -73,7 +73,17 @@ const EquipmentTable = () => {
     columnHelper.display({
       id: "actions",
       header: "Select",
-      cell: (props) => props.row.id,
+      cell: (props) => {
+        const id = props.row.id;
+        return (
+          <a
+            href={`./equipment/${id}/edit`}
+            className="bg-indigo-600 hover:bg-indigo-500 w-fit self-center text-center text-md p-2 m-4 rounded-md text-neutral-50"
+          >
+            Edit
+          </a>
+        );
+      },
     }),
   ];
 
@@ -81,7 +91,9 @@ const EquipmentTable = () => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   //sorting state
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: "id", desc: true },
+  ]);
 
   /* sampleData is valid array of type Equipment
    *  1:1 with schema. we map it to type EquipmentTableEntry here.
