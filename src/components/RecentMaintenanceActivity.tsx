@@ -81,8 +81,11 @@ const RecentMaintenanceActivity = () => {
    */
   const [data, setData] = useState<MaintenanceRecordTableEntry[]>([]);
   useEffect(() => {
+    if (sampleMaintenanceData.length === 0) return;
     const filteredData = sampleMaintenanceData
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      })
       .slice(0, 10)
       .map((record) => ({
         ...record,
