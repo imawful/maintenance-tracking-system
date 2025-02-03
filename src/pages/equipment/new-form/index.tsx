@@ -1,6 +1,10 @@
 import { EquipmentForm } from "@/components/EquipmentForm";
 import { DirectoryList } from "@/components/DirectoryList";
+import { useEffect } from "react";
 const Home = () => {
+  useEffect(() => {
+    document.title = "New Equipment";
+  }, []);
   return (
     <div className="flex flex-col p-4 items-center bg-slate-100 h-auto">
       <div className="flex flex-col items-center justify-center mt-8 mb-8 space-y-4">
