@@ -94,7 +94,10 @@ const MaintenanceRecordForm = () => {
               {...register("technician")}
             />
             {typeof errors.technician?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p
+                id="maintenance-technician-name-error"
+                className="text-sm text-red-500 font-bold"
+              >
                 {errors.technician?.message}
               </p>
             )}
@@ -113,7 +116,10 @@ const MaintenanceRecordForm = () => {
               {...register("date")}
             />
             {typeof errors.date?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p
+                id="maintenance-date-error"
+                className="text-sm text-red-500 font-bold"
+              >
                 {errors.date?.message}
               </p>
             )}
@@ -143,7 +149,10 @@ const MaintenanceRecordForm = () => {
               })}
             </select>
             {typeof errors.equipmentId?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p
+                id="maintenance-equipment-id-error"
+                className="text-sm text-red-500 font-bold"
+              >
                 {errors.equipmentId?.message}
               </p>
             )}
@@ -167,7 +176,10 @@ const MaintenanceRecordForm = () => {
               <option value="Emergency">Emergency</option>
             </select>
             {typeof errors.type?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p
+                id="maintenance-type-error"
+                className="text-sm text-red-500 font-bold"
+              >
                 {errors.type?.message}
               </p>
             )}
@@ -188,7 +200,10 @@ const MaintenanceRecordForm = () => {
               {...register("hoursSpent")}
             />
             {typeof errors.hoursSpent?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p
+                id="maintenance-hours-spent-error"
+                className="text-sm text-red-500 font-bold"
+              >
                 {errors.hoursSpent?.message}
               </p>
             )}
@@ -228,14 +243,20 @@ const MaintenanceRecordForm = () => {
                 x
               </button>
               {typeof errors.partsReplaced?.[index]?.message === "string" && (
-                <p className="text-sm text-red-500 text-center font-bold">
+                <p
+                  id="maintenance-parts-replaced-individual-error"
+                  className="text-sm text-red-500 text-center font-bold"
+                >
                   {errors.partsReplaced?.[index]?.message}
                 </p>
               )}
             </div>
           ))}
           {typeof errors.partsReplaced?.message === "string" && (
-            <p className="text-sm text-red-500 font-bold">
+            <p
+              id="maintenance-parts-replaced-optional-error"
+              className="text-sm text-red-500 font-bold"
+            >
               {errors.partsReplaced?.message}
             </p>
           )}
@@ -256,7 +277,10 @@ const MaintenanceRecordForm = () => {
             {...register("description")}
           />
           {typeof errors.description?.message === "string" && (
-            <p className="text-sm text-red-500 text-center font-bold">
+            <p
+              id="maintenance-description-error"
+              className="text-sm text-red-500 text-center font-bold"
+            >
               {errors.description?.message}
             </p>
           )}
@@ -289,7 +313,10 @@ const MaintenanceRecordForm = () => {
               </option>
             </select>
             {typeof errors.priority?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p
+                id="maintenance-priority-error"
+                className="text-sm text-red-500 font-bold"
+              >
                 {errors.priority?.message}
               </p>
             )}
@@ -313,7 +340,10 @@ const MaintenanceRecordForm = () => {
               <option value="Pending Parts">Pending Parts</option>
             </select>
             {typeof errors.completionStatus?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p
+                id="maintenance-completion-status-error"
+                className="text-sm text-red-500 font-bold"
+              >
                 {errors.completionStatus?.message}
               </p>
             )}
