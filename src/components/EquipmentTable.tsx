@@ -230,22 +230,22 @@ const EquipmentTable = () => {
                     )
                     ? "bg-red-400"
                     : row
-                        .getVisibleCells()
-                        .some(
-                          (cell) =>
-                            cell.column.id === "status" &&
-                            cell.getValue() === "Operational",
-                        )
-                    ? "bg-green-400"
-                    : row
-                        .getVisibleCells()
-                        .some(
-                          (cell) =>
-                            cell.column.id === "status" &&
-                            cell.getValue() === "Maintenance",
-                        )
-                    ? "bg-yellow-400"
-                    : "bg-zinc-400"
+                          .getVisibleCells()
+                          .some(
+                            (cell) =>
+                              cell.column.id === "status" &&
+                              cell.getValue() === "Operational",
+                          )
+                      ? "bg-green-400"
+                      : row
+                            .getVisibleCells()
+                            .some(
+                              (cell) =>
+                                cell.column.id === "status" &&
+                                cell.getValue() === "Maintenance",
+                            )
+                        ? "bg-yellow-400"
+                        : "bg-zinc-400"
                 }
               >
                 {row.getVisibleCells().map((cell) => {
