@@ -37,7 +37,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="bg-slate-200 w-fit m-4 rounded-lg h-full">
-          <p className="text-6xl text-center self-center text-neutral-950 mt-4 mb-4">
+          <p className="text-6xl text-center text-neutral-950 mt-4 mb-4">
             Recent Maintenace Activity
           </p>
           <div className="border m-4 bg-slate-300">
