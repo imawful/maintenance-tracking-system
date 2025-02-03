@@ -1,4 +1,3 @@
-import { Equipment } from "@/ts/types";
 import { MaintenanceRecord } from "@/ts/types";
 import {
   createColumnHelper,
@@ -67,7 +66,7 @@ const MaintenanceRecordTable = () => {
       enableSorting: false,
       filterFn: (row, columnId, filterValue) => {
         const rowDate: string = row.getValue(columnId);
-        return rowDate >= filtersStartDate && rowDate <= filtersEndDate;
+        return rowDate >= filtersStartDate && rowDate <= filterValue; //filtersEndDate;
       },
     }),
     columnHelper.accessor("completionStatus", {
@@ -195,12 +194,12 @@ const MaintenanceRecordTable = () => {
                         className={
                           header.column.id === "hoursSpent" ||
                           header.column.id === "actions"
-                            ? "w-1/5 border-2 border-black"
+                            ? "w-1/6 border-2 border-black"
                             : header.column.id === "date"
-                            ? "w-3/5 border-2 border-black"
-                            : header.column.id !== "description"
-                            ? "w-1/5 border-2 border-black"
-                            : "w-3/5 border-2 border-black"
+                              ? "w-1/2 border-2 border-black"
+                              : header.column.id !== "description"
+                                ? "w-1/6 border-2 border-black"
+                                : "w-1/2 border-2 border-black"
                         }
                       >
                         <div
@@ -373,8 +372,11 @@ const MaintenanceRecordTable = () => {
                     {row.getVisibleCells().map((cell) => {
                       return (
                         <td
+                          id={`maintenance-record-${(cell.id as string).split("_")[0]}-${
+                            cell.column.id
+                          }`}
                           key={cell.id}
-                          className="text-center break-all lg:break-normal text-neutral-900 border-2 border-neutral-900 text-md"
+                          className="text-center break-all lg:break-normal text-neutral-900 border-2 p-2 border-neutral-900 text-md"
                         >
                           {flexRender(
                             cell.column.columnDef.cell,
