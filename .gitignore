@@ -46,3 +46,7 @@ tailwind.config*
 tailwind.config.*
 postcss.config*
 postcss.config.*
+
+#playwright for now ommit results
+playwright-report/*
+test-results/*
