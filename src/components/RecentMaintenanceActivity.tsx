@@ -1,4 +1,4 @@
-import { MaintenanceRecord } from "@/ts/types";
+import { MaintenanceRecord, Equipment } from "@/ts/types";
 import {
   createColumnHelper,
   useReactTable,
@@ -10,8 +10,8 @@ import { useMockData } from "@/context/MockDataContext";
 
 const RecentMaintenanceActivity = () => {
   const { equipment, maintenanceRecords } = useMockData();
-  const sampleEquipmentData = equipment;
-  const sampleMaintenanceData = maintenanceRecords;
+  const sampleEquipmentData: Equipment[] = equipment;
+  const sampleMaintenanceData: MaintenanceRecord[] = maintenanceRecords;
 
   type MaintenanceRecordTableEntry = Omit<MaintenanceRecord, "date"> & {
     date: string;
@@ -111,8 +111,10 @@ const RecentMaintenanceActivity = () => {
                   colSpan={header.colSpan}
                   className={
                     header.id === "description"
-                      ? "w-3/4 border-2 border-black"
-                      : "w-1/4 border-2 border-black"
+                      ? "w-4/5 border-2 border-black"
+                      : header.id === "hoursSpent"
+                        ? "w-min border-2 border-black"
+                        : "w-1/5 border-2 border-black"
                   }
                 >
                   <div className="font-bold break-all lg:break-normal text-lg p-3 text-neutral-50">
@@ -142,22 +144,22 @@ const RecentMaintenanceActivity = () => {
                   )
                   ? "bg-amber-600"
                   : row
-                      .getVisibleCells()
-                      .some(
-                        (cell) =>
-                          cell.column.id == "priority" &&
-                          cell.getValue() === "Low",
-                      )
-                  ? "bg-slate-400"
-                  : row
-                      .getVisibleCells()
-                      .some(
-                        (cell) =>
-                          cell.column.id === "priority" &&
-                          cell.getValue() === "Medium",
-                      )
-                  ? "bg-teal-400"
-                  : ""
+                        .getVisibleCells()
+                        .some(
+                          (cell) =>
+                            cell.column.id == "priority" &&
+                            cell.getValue() === "Low",
+                        )
+                    ? "bg-slate-400"
+                    : row
+                          .getVisibleCells()
+                          .some(
+                            (cell) =>
+                              cell.column.id === "priority" &&
+                              cell.getValue() === "Medium",
+                          )
+                      ? "bg-teal-400"
+                      : ""
                 //"bg-zinc-400"
               }
             >
