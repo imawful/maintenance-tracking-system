@@ -38,11 +38,9 @@ const EquipmentEditForm = (props: EquipmentEditFormProps) => {
       setValue("installDate", eq.installDate);
       setValue("status", eq.status);
     }
-  }, [equipment]);
+  }, [equipment, props.id, setValue]);
 
   const myOnSubmit = (data: Equipment) => {
-    //TODO  update the changes.
-
     const updatedEquipment = equipment.map((eq) =>
       eq.id === props.id ? data : eq,
     );
