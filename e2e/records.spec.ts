@@ -240,9 +240,38 @@ test("validate maintenance hours negative", async ({ page }) => {
 test("show equipment name in maintenance table", async ({ page }) => {
   await page.goto("/maintenance/");
   await expect(page).toHaveTitle("Maintenance Records");
+
+  for (const column of await page.locator("td").all()) {
+    const id = await column.getAttribute("id");
+    if (id?.includes("equipmentId")) {
+      const eqName = await column.innerText();
+      expect(eqName.length > 2).toBe(true);
+    }
+  }
 });
 
 test("filter maintenance records by date range", async ({ page }) => {
   await page.goto("/maintenance/");
   await expect(page).toHaveTitle("Maintenance Records");
+
+  //SOMETIMES when running this test it will fail since the maintenance
+  //records have not yet loaded.
+  const initialRows = (await page.locator("tr").count()) - 1;
+  console.log("DEBUG intial maintenance record rows: ", initialRows);
+  expect(initialRows === 100).toBe(true);
+
+  const sDate = new Date(2024, 6);
+  const eDate = new Date(2024, 12);
+
+  await page.locator("#start-date").fill(sDate.toISOString().split("T")[0]);
+  await page.locator("#end-date").fill(eDate.toISOString().split("T")[0]);
+  const filteredRows = (await page.locator("tr").count()) - 1;
+  expect(filteredRows !== initialRows).toBe(true);
+  for (const column of await page.locator("td").all()) {
+    const id = await column.getAttribute("id");
+    if (id?.includes("date")) {
+      const mYear = await column.innerText();
+      expect(mYear.split("-")[0] === "2024").toBe(true);
+    }
+  }
 });
