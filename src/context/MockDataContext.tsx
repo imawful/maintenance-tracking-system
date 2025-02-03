@@ -7,6 +7,7 @@ import React, {
   useState,
   ReactNode,
 } from "react";
+import { faker } from "@faker-js/faker";
 import { Equipment, MaintenanceRecord } from "@/ts/types";
 import { equipmentSchema, maintenanceRecordSchema } from "@/ts/schemas";
 import { generateMock } from "@anatine/zod-mock";
@@ -27,27 +28,35 @@ const generateMockEquipment = () => {
     const year = randomInt(2023, 2025);
     const date = new Date(year, month, day);
 
-    return { ...eq, id: index.toString(), installDate: date };
+    const eqName = faker.commerce.productName();
+
+    return { ...eq, id: index.toString(), name: eqName, installDate: date };
   });
   return equipment;
 };
 
 const generateMockRecords = (equipment: Equipment[]) => {
-  if (equipment.length === 0) {
-    return [];
-  }
-  const records = Array.from({ length: 100 }, (_, index) => {
+  const length = equipment.length > 0 ? 100 : 0;
+  const records = Array.from({ length }, (_, index) => {
     const record = generateMock(maintenanceRecordSchema);
-
     //corresponding equipment id.
     const eqId = equipment.map((eq) => eq.id)[index % equipment.length];
 
     // we set a date for the maintenance record by retrieveing the
     // corresponding equipments date and then adding randomInt(1,30) days.
-    const installTime =
-      equipment[index % equipment.length].installDate.getTime();
+    const installTime = new Date(
+      equipment[index % equipment.length].installDate,
+    ).getTime();
     const date = new Date(installTime + randomInt(1, 30) * 24 * 60 * 60 * 1000);
-    return { ...record, id: String(index), equipmentId: eqId, date: date };
+
+    const techName = faker.name.firstName();
+    return {
+      ...record,
+      id: String(index),
+      technician: techName,
+      equipmentId: eqId,
+      date: date,
+    };
   });
   return records;
 };
