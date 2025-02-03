@@ -1,7 +1,7 @@
 import { PieChart, Pie, ResponsiveContainer } from "recharts";
 import { useMockData } from "@/context/MockDataContext";
 const EquipmentChart = () => {
-  const { equipment, maintenanceRecords } = useMockData();
+  const { equipment } = useMockData();
   interface equipmentChartData {
     status: string;
     count: number;
@@ -42,16 +42,12 @@ const EquipmentChart = () => {
     payload: BarLabelPayload;
     x: number;
     y: number;
-    width: number;
-    height: number;
     value: number;
   }
   const renderCustomBarLabel = ({
     payload,
     x,
     y,
-    width,
-    height,
     value,
   }: EquipmentLabelProps) => {
     const totalCount = mockData.map((d) => d.count).reduce((a, b) => a + b);
@@ -61,18 +57,18 @@ const EquipmentChart = () => {
       status === "Operational"
         ? -30
         : status === "Down"
-        ? -15
-        : status === "Maintenance"
-        ? 20
-        : -14;
+          ? -15
+          : status === "Maintenance"
+            ? 20
+            : -14;
     const dx =
       status === "Operational"
         ? 10
         : status === "Down"
-        ? -40
-        : status === "Maintenance"
-        ? -30
-        : 40;
+          ? -40
+          : status === "Maintenance"
+            ? -30
+            : 40;
     return (
       <text x={x} y={y} fill="black" textAnchor="middle" dx={dx} dy={dy}>
         <tspan x={x} y={y} dx={dx} dy={dy}>
@@ -87,7 +83,13 @@ const EquipmentChart = () => {
 
   return (
     <div className="w-full h-full bg-inherit">
-      <div className="w-[600px] h-[600px]">
+      <div className="w-[800px] h-[600px]">
+        <div className="pt-4">
+          <p className="text-center text-md text-neutral-950 italic">
+            Total Number of Equipment:{" "}
+            {mockData.map((md) => md.count).reduce((acc, c) => (acc += c), 0)}
+          </p>
+        </div>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -96,7 +98,7 @@ const EquipmentChart = () => {
               nameKey="status"
               cx="50%"
               cy="50%"
-              outerRadius={170}
+              outerRadius={190}
               label={renderCustomBarLabel}
             />
           </PieChart>
