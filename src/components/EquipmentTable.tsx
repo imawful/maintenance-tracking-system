@@ -124,6 +124,7 @@ const EquipmentTable = () => {
   return (
     <div className="flex flex-col justify-center">
       <button
+        id="clear-filter-button"
         onClick={() => {
           equipmentTable.resetColumnFilters();
           equipmentTable.resetSorting();
@@ -171,6 +172,7 @@ const EquipmentTable = () => {
                       <div className="flex justify-center text-sm bg-inherit text-neutral-50 text-center">
                         {header.column.id === "status" && (
                           <select
+                            id="equipment-status-filter"
                             className="bg-inherit text-center hover:cursor-pointer"
                             onChange={(e) =>
                               header.column.setFilterValue(
@@ -187,6 +189,7 @@ const EquipmentTable = () => {
                         )}
                         {header.column.id === "department" && (
                           <select
+                            id="equipment-department-filter"
                             className="bg-inherit text-center hover:cursor-pointer"
                             value={
                               (header.column.getFilterValue() as string) || ""
@@ -249,6 +252,9 @@ const EquipmentTable = () => {
                   return (
                     <td
                       key={cell.id}
+                      id={`equipment-${(cell.id as string).split("_")[0]}-${
+                        cell.column.id
+                      }`}
                       className="text-center break-all text-md text-neutral-900 border-2 p-1 border-neutral-900"
                     >
                       {flexRender(
