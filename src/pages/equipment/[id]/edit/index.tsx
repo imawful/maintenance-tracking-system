@@ -1,6 +1,10 @@
 import { EquipmentEditForm } from "@/components/EquipmentEditForm";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 const EditFormPage = () => {
+  useEffect(() => {
+    document.title = "Editing Equipment";
+  }, []);
   const router = useRouter();
   const id = router.query.id as string | undefined;
 

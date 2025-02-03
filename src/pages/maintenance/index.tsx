@@ -1,6 +1,10 @@
 import { MaintenanceRecordTable } from "@/components/MaintenanceRecordTable";
 import { DirectoryList } from "@/components/DirectoryList";
+import { useEffect } from "react";
 const MaintenancePage = () => {
+  useEffect(() => {
+    document.title = "Maintenance Records";
+  }, []);
   return (
     <div className="bg-slate-100 flex flex-col justify-start p-4 h-screen">
       <div className="flex flex-col items-center justify-center mt-8 mb-8 space-y-4">

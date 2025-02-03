@@ -1,6 +1,6 @@
 import { EquipmentTable } from "@/components/EquipmentTable";
 import { DirectoryList } from "@/components/DirectoryList";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 const EquipmentPage = () => {
   useEffect(() => {
     document.title = "Equipment";
