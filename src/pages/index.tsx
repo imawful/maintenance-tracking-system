@@ -1,8 +1,10 @@
-import { Dashboard } from '@/components/Dashboard';
+import { Dashboard } from "@/components/Dashboard";
+import { useEffect } from "react";
 
 const App = () => {
-  return(
-    <Dashboard/>
-  );
+  useEffect(() => {
+    document.title = "Dashboard";
+  }, []);
+  return <Dashboard />;
 };
 export default App;
