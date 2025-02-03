@@ -54,7 +54,7 @@ const EquipmentForm = () => {
               {...register("name")}
             />
             {typeof errors.name?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p id="equipment-name-error" className="text-sm text-red-500 font-bold">
                 {errors.name?.message}
               </p>
             )}
@@ -74,7 +74,7 @@ const EquipmentForm = () => {
               {...register("installDate")}
             />
             {typeof errors.installDate?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p id="equipment-install-date-error" className="text-sm text-red-500 font-bold">
                 {errors.installDate?.message}
               </p>
             )}
@@ -95,7 +95,7 @@ const EquipmentForm = () => {
             {...register("location")}
           />
           {typeof errors.location?.message === "string" && (
-            <p className="text-sm text-red-500 font-bold">
+            <p id="equipment-location-error" className="text-sm text-red-500 font-bold">
               {errors.location?.message}
             </p>
           )}
@@ -121,7 +121,7 @@ const EquipmentForm = () => {
               <option value="Shipping">Shipping</option>
             </select>
             {typeof errors.department?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p id="equipment-department-error" className="text-sm text-red-500 font-bold">
                 {errors.department?.message}
               </p>
             )}
@@ -141,7 +141,7 @@ const EquipmentForm = () => {
               {...register("model")}
             />
             {typeof errors.model?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p id="equipment-model-error" className="text-sm text-red-500 font-bold">
                 {errors.model?.message}
               </p>
             )}
@@ -162,7 +162,7 @@ const EquipmentForm = () => {
             {...register("serialNumber")}
           />
           {typeof errors.serialNumber?.message === "string" && (
-            <p className="text-sm text-red-500 font-bold">
+            <p id="equipment-serial-number-error" className="text-sm text-red-500 font-bold">
               {errors.serialNumber?.message}
             </p>
           )}
@@ -188,7 +188,7 @@ const EquipmentForm = () => {
               <option value="Retired">Retired</option>
             </select>
             {typeof errors.status?.message === "string" && (
-              <p className="text-sm text-red-500 font-bold">
+              <p id="equipment-status-error" className="text-sm text-red-500 font-bold">
                 {errors.status?.message}
               </p>
             )}
