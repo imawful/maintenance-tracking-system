@@ -19,8 +19,8 @@ The following are required to install and run the application.
 1. Clone the repository:
 
 ```sh
-git clone https://my-repo.git
-cd my-repo/
+git clone https://github.com/imawful/maintenance-tracking-system.git
+cd maintenance-tracking-system/
 ```
 
 2. Install the dependencies:
@@ -205,7 +205,7 @@ There are a total of ~6 pages in this application. Each of the pages in the appl
   Contains a global stylesheet for setting consistent values across the application. (Furhter styling is achieved using Tailwind).
 
 - `src/ts/`
-  Contains the application's schems, interfaces, and exported types.
+  Contains the application's schemas, interfaces, and exported types.
 
 - `e2e/`
   Contains the written end to end tests used by Playwright.
