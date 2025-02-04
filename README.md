@@ -61,16 +61,27 @@ npm run test
 
 ### Dashboard
 
+![image](https://github.com/user-attachments/assets/6e278a67-474b-4e8f-805c-2c0b1d4faea0)
+
 - Provides a quick overview of the latest **equipment breakdowns** based on their status.
 - Displays a chart of **maintenance hours spent** per department.
 - Shows **recent maintenance activities**.
 
 ### Forms
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9a843e11-b5e5-4a14-9bb9-f29ef7d76dbc" width="45%">
+  <img src="https://github.com/user-attachments/assets/41822c07-6229-4663-abbc-e3f3de8bf27e" width="45%">
+</p>
+
 - Includes forms for **adding new equipment** and **creating new maintenance records**.
 - Implments proper validation and error messages to ensure that only valid data is submitted.
 
 ### Tables
+
+![image](https://github.com/user-attachments/assets/8cde74f2-1133-4cb3-8030-f87467506b92)
+![image](https://github.com/user-attachments/assets/0c5e4066-2aa3-4748-afc9-2e7b5c8e3f60)
+
 
 - Individual tables for equipment and maintenance records.
 - Displays **all equipment and maintenance records** in a structured table format.
@@ -79,6 +90,8 @@ npm run test
 - Allows **filtering by Type, Status, Priority, and Date (range)** for maintenance records.
 
 ### Charts
+
+![image](https://github.com/user-attachments/assets/0e04f40d-90c9-4de7-a197-acfd3cdf8b9f)
 
 - Used in dashboard to visualize:
   - **Equipment Status Breakdown**
@@ -105,32 +118,41 @@ I wrote each test with the expect user flow in mind, (i.e. go to create new equi
 ### Equipment Tests
 
 - `create new equipment`
+  
   Ensures that we can create new equipment with valid data. We test are form for creating equipment, and make sure the equipment gets added internally.
 
 - `show validation errors`
+  
   Ensures that validation errors are shown if certain data is invalid. We make sure the a message appears for each field in the form that doesn't have a valid entry.
 
 - `edit exisitng equipment`
+  
   Ensures that we can updae an equipment's status, location, or department. We test the edit button on the equipment page and make sure the edit form allows for updating these values. We then make sure the update persists after submission.
 
 - `filter equipment table`
+  
   Ensures that we can filter the different kinds of equipment on the equipment table. We select the filter for each of the different status and deparments and ensure the rows present on the page match our selected filters.
 
 ### Maintenance Record Tests
 
 - `create new maintenance record`
+  
   Ensures that we can create a new record with valid data. We test the form for creating a new record, and make sure the record gets added internally.
 
 - `validate maintenance hours over 24`
+  
   Ensures that values greater than 24 for the hours spent field will not be accepted. We enter in a value greater than 24, attempt to submit, and validate that an error message appears and the submission was unsuccessful.
 
 - `validate maintenance hours negative`
+  
   Similar to the "over 24 test" but ensures that negative number values are not accepted.
 
 - `show equipment name in maintenance table`
+  
   This test ensures that we can see the name of the equipment for each maintenance record **in** the maintenance table. We test to see that each of the columns under the **Equipment Name** header has a valid name.
 
 - `filter maintenance records by date range`
+  
   This test ensures that when selecting a specific date range on the records table we only see records that fall within the range. We test the filter fields under the date tab, and then make sure each visible row has a date falling between the range.
 
 ## How to run different types of tests
@@ -193,21 +215,27 @@ There are a total of ~6 pages in this application. Each of the pages in the appl
 **Project Structure:**
 
 - `src/components/`
+  
   Contains the applications custom React components.
 
 - `src/context/`
+  
   Contains a file where we create a provider and context with methods exported to access the context and data.
 
 - `src/pages/`
+  
   Contains the different accessible pages across the application following Next.js **file-system based routing**.
 
 - `src/styles/`
+  
   Contains a global stylesheet for setting consistent values across the application. (Furhter styling is achieved using Tailwind).
 
 - `src/ts/`
+  
   Contains the application's schemas, interfaces, and exported types.
 
 - `e2e/`
+  
   Contains the written end to end tests used by Playwright.
 
 ## State Management Approach
