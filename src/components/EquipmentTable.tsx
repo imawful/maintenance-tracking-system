@@ -174,6 +174,9 @@ const EquipmentTable = () => {
                           <select
                             id="equipment-status-filter"
                             className="bg-inherit text-center hover:cursor-pointer"
+                            value={
+                              (header.column.getFilterValue() as string) || ""
+                            }
                             onChange={(e) =>
                               header.column.setFilterValue(
                                 e.target.value || undefined,

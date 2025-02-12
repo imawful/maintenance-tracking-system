@@ -172,6 +172,7 @@ const MaintenanceRecordTable = () => {
           <button
             onClick={() => {
               maintenanceRecordTable.resetSorting();
+              maintenanceRecordTable.resetColumnFilters();
               setFiltersStartDate(dateMIN);
               setFiltersEndDate(dateMAX);
               maintenanceRecordTable
@@ -227,6 +228,10 @@ const MaintenanceRecordTable = () => {
                             {header.column.id === "type" && (
                               <select
                                 className="bg-inherit text-center hover:cursor-pointer"
+                                value={
+                                  (header.column.getFilterValue() as string) ||
+                                  ""
+                                }
                                 onChange={(e) =>
                                   header.column.setFilterValue(
                                     e.target.value || undefined,
